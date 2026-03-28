@@ -1,4 +1,5 @@
 import requests
+import time
 
 def get_food(barcode):
     url = f"https://world.openfoodfacts.org/api/v2/product/{barcode}.json"
@@ -28,20 +29,8 @@ def get_food(barcode):
     
     except requests.exceptions.ConnectionError:
         print("No internet connection.")
+        time.sleep(1)
         return {}
 
-product = get_food("4890008100309")
-product = get_food("4890008100309")
 
-if product:
-    name = product.get("product_name", "Unknown")
-    grade = product.get("nutriscore_grade", "?").upper()
-    ingredients = product.get("ingredients_text", "Not available")
-    calories = product.get("nutriments", {}).get("energy-kcal_100g", "?")
-    sugars = product.get("nutriments", {}).get("sugars_100g", "?")
 
-    print(f"\n Product: {name}")
-    print(f" Nutri-score: {grade}")
-    print(f" Calories: {calories} kcal per 100g")
-    print(f" Sugars: {sugars}g per 100g")
-    print(f"\n Ingredients: {ingredients}")
